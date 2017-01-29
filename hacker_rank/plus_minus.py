@@ -3,9 +3,7 @@ import sys
 n = int(raw_input().strip())
 arr = map(int,raw_input().strip().split(' '))
 
-pos = 0.0
-negs = 0.0
-zeros = 0.0
+pos, negs, zeros = 0.0
 
 for num in arr:
     if num > 0.0:
