@@ -3,7 +3,7 @@ import sys
 import re
 
 def create(length):
-    words = open('/Users/alexaaronpena/Github Repositories/Tweet-Generator/class_1/sample-text.txt', 'r').read()
+    words = open('./class_1/sample-text.txt', 'r').read()
     word_list = []
     rand_words = []
     sentence = ""
