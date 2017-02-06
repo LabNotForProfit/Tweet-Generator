@@ -17,16 +17,13 @@ def unique_words(histogram):
     return len(histogram)
 
 def frequency(word, histogram):
-    if word in histogram:
-        return histogram[word]
-    else:
-        return 0
+    return histogram.get(word, 0)
 
 if __name__ == "__main__":
-    dict = open('/Users/alexaaronpena/Github Repositories/Tweet-Generator/class_1/fish.txt', 'r')
+    dict = open('/Users/alexaaronpena/Github Repositories/Tweet-Generator/class_1/sample-text.txt', 'r')
     text = dict.read()
     dict.close()
 
-    # histogram(text)
-    # unique_words(histogram(text))
-    print(frequency("Alex", histogram(text)))
+    # print(histogram(text))
+    # print(unique_words(histogram(text)))
+    print(frequency("alex", histogram(text)))
