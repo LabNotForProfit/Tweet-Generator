@@ -30,7 +30,8 @@ def random_word(histogram):
                     outcome_gram[key] += 1
                 else:
                     outcome_gram[key] = 1
-                return outcome_gram
+                # return outcome_gram
+                return key
             else:
                 probability += 1
 
@@ -43,9 +44,9 @@ if __name__ == "__main__":
     # print(histogram(text))
     # print(unique_words(histogram(text)))
     # print(frequency("alex", histogram(text)))
-    for number in range(1, 10000):
+    for number in range(1, 100000):
         random_word(histogram(text))
 
-    # print("If this were a perfect algorithm, the number of fish would be 5000, but my actual value is " + str(outcome_gram["fish"]))
-    # print("The percent error is " + str(abs(outcome_gram["fish"] - 5000.0) / 5000.0 * 100.0) + "%")
+    print("If this were a perfect algorithm, the number of fish would be 5000, but my actual value is " + str(outcome_gram["fish"]))
+    print("The percent error is " + str(abs(outcome_gram["fish"] - 50000.0) / 50000.0 * 100.0) + "%")
     # outcome_gram["fish"] = abs(outcome_gram["fish"] - 5000.0) / 5000.0 * 100.0
