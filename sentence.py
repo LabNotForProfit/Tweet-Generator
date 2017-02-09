@@ -15,7 +15,7 @@ def create(length, dict):
     return sentence
 
 def open_file():
-    dict = open('/Users/alexaaronpena/Github Repositories/Tweet-Generator/class_1/sample-text.txt', 'r')
+    dict = open('./class_1/sample-text.txt', 'r')
     hist_dict = histogram(dict.read())
     dict.close()
 
