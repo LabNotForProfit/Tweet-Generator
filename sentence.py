@@ -2,41 +2,43 @@ import random
 import sys
 import re
 
-def create(length):
-    words = open('./class_1/sample-text.txt', 'r').read()
+def create(length, dict):
     word_list = []
-    rand_words = []
     sentence = ""
 
-    for word in words.split():
-        word = re.sub('[:;-[]', '', word)
+    for _ in range(length):
+        word = random_word(dict)
         word_list.append(word)
 
-    for _ in range(length):
-        rand_index = random.randint(0, len(word_list))
-
-        rand_words.append(word_list[rand_index])
-
-        sentence = " ".join(rand_words)
+    sentence = " ".join(word_list)
 
     return sentence
 
-if __name__ == "__main__":
+def open_file():
     dict = open('/Users/alexaaronpena/Github Repositories/Tweet-Generator/class_1/sample-text.txt', 'r')
+    hist_dict = histogram(dict.read())
+    dict.close()
 
-    word_count = int(sys.argv[1])
+    return hist_dict
 
-    dict_list = []
+# Creates a histogram from a source text
+def histogram(source_text):
+    histogram = {}
+    for word in source_text.split():
+        word = re.sub('[.,:;!-[]?', '', word)
 
-    rand_words = []
+        if word in histogram:
+            histogram[word] += 1
+        else:
+            histogram[word] = 1
 
-    for word in dict:
-        dict_list.append(word.replace('\n', ' '))
+    return histogram
 
-    for _ in range(word_count):
-        rand_index = random.randint(0, len(dict_list))
-
-        rand_words.append(dict_list[rand_index])
-
-        sentence = "".join(rand_words).replace('\n', ' ')
-        print(sentence)
+def random_word(histogram):
+    probability = 1
+    rand_index = random.randint(1, sum(histogram.values()))
+    # Algorithm 2
+    for word in histogram:
+        probability += histogram[word]
+        if probability >= rand_index:
+            return word

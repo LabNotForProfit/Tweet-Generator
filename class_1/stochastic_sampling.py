@@ -14,26 +14,30 @@ def histogram(source_text):
 
     return histogram
 
-def unique_words(histogram):
-    return len(histogram)
-
-def frequency(word, histogram):
-    return histogram.get(word, 0)
-
 def random_word(histogram):
-    probability = 1
+    probability = 0
     rand_index = random.randint(1, sum(histogram.values()))
-    for (key, value) in histogram.items():
-        for num in range(1, value + 1):
-            if probability == rand_index:
-                if key in outcome_gram:
-                    outcome_gram[key] += 1
-                else:
-                    outcome_gram[key] = 1
-                # return outcome_gram
-                return key
+    # Algorithm 1
+    # for (key, value) in histogram.items():
+    #     for num in range(1, value + 1):
+    #         if probability == rand_index:
+    #             if key in outcome_gram:
+    #                 outcome_gram[key] += 1
+    #             else:
+    #                 outcome_gram[key] = 1
+    #             # return outcome_gram
+    #             return key
+    #         else:
+    #             probability += 1
+    # Algorithm 2
+    for word in histogram:
+        probability += histogram[word]
+        if probability >= rand_index:
+            if word in outcome_gram:
+                outcome_gram[word] += 1
             else:
-                probability += 1
+                outcome_gram[word] = 1
+            return word
 
 if __name__ == "__main__":
     outcome_gram = {}
@@ -41,12 +45,11 @@ if __name__ == "__main__":
     text = dict.read()
     dict.close()
 
-    # print(histogram(text))
-    # print(unique_words(histogram(text)))
-    # print(frequency("alex", histogram(text)))
+    hist_dict = histogram(text)
     for number in range(1, 100000):
-        random_word(histogram(text))
+        random_word(hist_dict)
 
-    print("If this were a perfect algorithm, the number of fish would be 5000, but my actual value is " + str(outcome_gram["fish"]))
+    print("If this were a perfect algorithm, the number of fish would be 50000, but my actual value is " + str(outcome_gram["fish"]))
+    # for word, expected_count in hist_dict.items():
     print("The percent error is " + str(abs(outcome_gram["fish"] - 50000.0) / 50000.0 * 100.0) + "%")
     # outcome_gram["fish"] = abs(outcome_gram["fish"] - 5000.0) / 5000.0 * 100.0
