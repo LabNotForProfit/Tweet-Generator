@@ -13,6 +13,7 @@ def create(length, dict):
     sentence = " ".join(word_list)
 
     return sentence
+# 7
 
 def open_file():
     dict = open('./class_1/sample-text.txt', 'r')
@@ -20,6 +21,7 @@ def open_file():
     dict.close()
 
     return hist_dict
+#  4
 
 # Creates a histogram from a source text
 def histogram(source_text):
@@ -33,6 +35,7 @@ def histogram(source_text):
             histogram[word] = 1
 
     return histogram
+# 8
 
 def random_word(histogram):
     probability = 1
@@ -42,3 +45,8 @@ def random_word(histogram):
         probability += histogram[word]
         if probability >= rand_index:
             return word
+# 6
+
+# MIN: 4
+# MAX: 8
+# AVG: 6.25
