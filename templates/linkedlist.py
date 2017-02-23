@@ -46,27 +46,74 @@ class LinkedList(object):
     def length(self):
         """Return the length of this linked list by traversing its nodes"""
         # TODO: count number of items
-        pass
+        count = 0
+        current = self.head
+        while current is not None:
+            count += 1
+            current = current.next
+        return count
 
     def append(self, item):
         """Insert the given item at the tail of this linked list"""
         # TODO: append given item
-        pass
+        new_node = Node(item)
+        if self.head is None:
+            self.head = new_node
+        else:
+            self.tail.next = new_node
+        self.tail = new_node
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list"""
         # TODO: prepend given item
-        pass
+        new_node = Node(item)
+        if self.head is None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node.next = self.head
+            self.head = new_node
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError"""
         # TODO: find given item and delete if found
-        pass
+        item_match = None
+        previous = None
+        current = self.head
+        while current is not None:
+            if current.data == item:
+                item_match = current
+                break
+            previous = current
+            current = current.next
+
+        if item_match is not None:
+            if previous is not None:
+                if item_match is self.tail:
+                    previous.next = item_match.next
+                    self.tail = previous
+                else:
+                    # print(previous.next)
+                    previous.next = item_match.next
+                    # print(previous.next)
+            else:
+                if item_match.next is not None:
+                    self.head = self.head.next
+                else:
+                    self.head = None
+                    self.tail = None
+        else:
+            raise ValueError
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality"""
         # TODO: find item where quality(item) is True
-        pass
+        current = self.head
+        while current is not None:
+            if quality(current.data):
+                return current.data
+            current = current.next
+        return None
 
 
 def test_linked_list():
