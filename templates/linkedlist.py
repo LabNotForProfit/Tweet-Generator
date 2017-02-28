@@ -85,7 +85,7 @@ class LinkedList(object):
         previous = None
         current = self.head
         while current is not None:
-            if current.data == item:
+            if current.data is item or current.data[0] is item:
                 item_match = current
                 break
             previous = current
@@ -136,16 +136,16 @@ def test_linked_list():
     print('length: ' + str(ll.length()))
 
     # Enable this after implementing delete:
-    # print('Deleting items:')
-    # ll.delete('B')
-    # print(ll)
-    # ll.delete('C')
-    # print(ll)
-    # ll.delete('A')
-    # print(ll)
-    # print('head: ' + str(ll.head))
-    # print('tail: ' + str(ll.tail))
-    # print('length: ' + str(ll.length()))
+    print('Deleting items:')
+    ll.delete('B')
+    print(ll)
+    ll.delete('C')
+    print(ll)
+    ll.delete('A')
+    print(ll)
+    print('head: ' + str(ll.head))
+    print('tail: ' + str(ll.tail))
+    print('length: ' + str(ll.length()))
 
 
 if __name__ == '__main__':

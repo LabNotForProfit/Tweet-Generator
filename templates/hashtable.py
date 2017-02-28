@@ -34,7 +34,10 @@ class HashTable(object):
     def values(self):
         """Return a list of all values in this hash table"""
         # TODO: Collect all values in each of the buckets
-        pass
+        bucket_values = []
+        for bucket in self.buckets:
+            bucket_values += [val[1] for val in bucket.items()]
+        return bucket_values
 
     def items(self):
         """Return a list of all items (key-value pairs) in this hash table"""
@@ -47,41 +50,54 @@ class HashTable(object):
     def length(self):
         """Return the length of this hash table by traversing its buckets"""
         # TODO: Count number of key-value entries in each of the buckets
-        return 0
+        count = 0
+        for bucket in self.buckets:
+            count += bucket.length()
+        return count
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False"""
         # TODO: Check if the given key exists in a bucket
-        pass
+        bucket_index = hash(key) % len(self.buckets) # Hashes key and maps it to value in bucket range
+        bucket = self.buckets[bucket_index]
+        searched_item = bucket.find(lambda item: item[0] == key)
+        if searched_item is not None:
+            return True
+        return False
 
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError"""
         # TODO: Check if the given key exists and return its associated value
-        pass
+        bucket_index = hash(key) % len(self.buckets) # Hashes key and maps it to value in bucket range
+        bucket = self.buckets[bucket_index]
+        searched_item = bucket.find(lambda item: item[0] == key)
+        if searched_item is not None:
+            return searched_item[1]
+        raise KeyError
 
     def set(self, key, value):
         """Insert or update the given key with its associated value"""
         # TODO: Insert or update the given key-value entry into a bucket
-        # generate hashed index for buckets
-        # search for said item in all buckets
-        # if item already exists in bucket, update its value
-        # else place the item at generated bucket index
-
-        bucket_index = hash(key) % len(self.buckets)
-        for index, bucket in enumerate(self.buckets):
-            val = bucket.find(lambda item: item == value)
-            if val is not None:
-                pass
-            elif index is bucket_index:
-                bucket.append(value)
-                print(index, bucket_index, bucket)
-        # pass
+        bucket_index = hash(key) % len(self.buckets) # Hashes key and maps it to value in bucket range
+        bucket = self.buckets[bucket_index]
+        new_item = (key, value)
+        searched_item = bucket.find(lambda item: item[0] == key)
+        if searched_item is not None:
+            # Update existing value
+            self.buckets[bucket_index].delete(key)
+            self.buckets[bucket_index].append(new_item)
+            pass
+        else:
+            bucket.append(new_item) # Set new value
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError"""
         # TODO: Find the given key and delete its entry if found
-        pass
-
+        bucket_index = hash(key) % len(self.buckets) # Hashes key and maps it to value in bucket range
+        try:
+            self.buckets[bucket_index].delete(key)
+        except ValueError:
+            raise KeyError
 
 def test_hash_table():
     ht = HashTable()
@@ -90,26 +106,31 @@ def test_hash_table():
     print('Setting entries:')
     ht.set('I', 1)
     print(ht)
-    # ht.set('V', 5)
-    # print(ht)
-    # ht.set('X', 10)
-    # print(ht)
-    # print('contains(X): ' + str(ht.contains('X')))
-    # print('get(I): ' + str(ht.get('I')))
-    # print('get(V): ' + str(ht.get('V')))
-    # print('get(X): ' + str(ht.get('X')))
-    # print('length: ' + str(ht.length()))
-
+    ht.set('V', 5)
+    print(ht)
+    ht.set('X', 10)
+    print(ht)
+    print('contains(X): ' + str(ht.contains('X')))
+    print('get(I): ' + str(ht.get('I')))
+    print('get(V): ' + str(ht.get('V')))
+    print('get(X): ' + str(ht.get('X')))
+    print('length: ' + str(ht.length()))
+    print('Updating entries:')
+    ht.set('I', 5)
+    print(ht)
+    ht.set('V', 1)
+    print(ht)
+    
     # Enable this after implementing delete:
-    # print('Deleting entries:')
-    # ht.delete('I')
-    # print(ht)
-    # ht.delete('V')
-    # print(ht)
-    # ht.delete('X')
-    # print(ht)
-    # print('contains(X): ' + str(ht.contains('X')))
-    # print('length: ' + str(ht.length()))
+    print('Deleting entries:')
+    ht.delete('I')
+    print(ht)
+    ht.delete('V')
+    print(ht)
+    ht.delete('X')
+    print(ht)
+    print('contains(X): ' + str(ht.contains('X')))
+    print('length: ' + str(ht.length()))
 
 
 if __name__ == '__main__':
